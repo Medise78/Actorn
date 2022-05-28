@@ -46,7 +46,7 @@ fun DetailsScreen(
      val actorProfile = "${uiState.actorData?.profileUrl}"
      
      Surface(color = MaterialTheme.colors.background) {
-          ActorRoundProfile(profileUrl = actorProfile)
+
           Box {
                ActorBackgroundWithGradiantForeground(imageUrl = actorProfile)
                Column {

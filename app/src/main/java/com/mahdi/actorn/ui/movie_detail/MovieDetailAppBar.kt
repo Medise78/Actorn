@@ -41,9 +41,6 @@ fun MovieDetailAppBar(
                     )
                 }
             }
-            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
-               Icon(modifier = Modifier.padding( 5.dp),painter = painterResource(id = R.drawable.ic_star), contentDescription ="" )
-            }
         }
     }
 }
