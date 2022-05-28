@@ -69,14 +69,14 @@ private fun ActorBackgroundWithGradiantForeground(
           LoadNetworkImage(imageUrl = imageUrl ,
                            contentDescription = stringResource(id = R.string.cd_actor_banner) ,
                            modifier = Modifier
-                                     .fillMaxSize()
-                                     .alpha(0.5f) ,
+                                 .fillMaxSize()
+                                 .alpha(0.5f) ,
                            shape = RectangleShape)
           Box(modifier = modifier
-                    .fillMaxSize()
-                    .verticalGradientScrim(color = MaterialTheme.colors.primary.copy(0.5f) ,
-                                           startYPercentage = 0f ,
-                                           endYPercentage = 1f))
+                .fillMaxSize()
+                .verticalGradientScrim(color = MaterialTheme.colors.primary.copy(0.5f) ,
+                                       startYPercentage = 0f ,
+                                       endYPercentage = 1f))
      }
 }
 
@@ -89,8 +89,8 @@ private fun ContentDetail(
 {
      val actorData = uiState.actorData
      Spacer(modifier = Modifier
-               .fillMaxWidth()
-               .statusBarsHeight())
+           .fillMaxWidth()
+           .statusBarsHeight())
      DetailAppBar(navigateUp = navigateUp , title = "${actorData?.actorName}")
      Spacer(modifier = Modifier.padding(top = 20.dp))
      ActorRoundProfile("${actorData?.profileUrl}")
@@ -117,10 +117,10 @@ private fun ActorRoundProfile(
           LoadNetworkImage(imageUrl = profileUrl ,
                            contentDescription = stringResource(id = R.string.cd_actor_image) ,
                            modifier = Modifier
-                                     .size(120.dp)
-                                     .border(width = 5.dp ,
-                                             color = MaterialTheme.colors.surface ,
-                                             shape = CircleShape) ,
+                                 .size(120.dp)
+                                 .border(width = 5.dp ,
+                                         color = MaterialTheme.colors.surface ,
+                                         shape = CircleShape) ,
                            shape = CircleShape)
      }
 }
@@ -156,8 +156,8 @@ private fun ActorCastMovie(
                 colorFilter = ColorFilter.tint(color = MaterialTheme.colors.onSurface) ,
                 alpha = 0.5f ,
                 modifier = Modifier
-                          .padding(start = 10.dp)
-                          .size(40.dp))
+                      .padding(start = 10.dp)
+                      .size(40.dp))
           CategoryTitle(title = stringResource(id = R.string.cast_movie_title))
      }
      LazyRow(horizontalArrangement = Arrangement.spacedBy(10.dp) ,
@@ -166,11 +166,11 @@ private fun ActorCastMovie(
                LoadNetworkImage(imageUrl = movie.posterPathUrl ,
                                 contentDescription = stringResource(id = R.string.cd_movie_poster) ,
                                 modifier = Modifier
-                                          .size(100.dp , 150.dp)
-                                          .clickable {
-                                               Timber.e("id is${movie.movieId}")
-                                               selectedMovie(movie.movieId)
-                                          } ,
+                                      .size(100.dp , 150.dp)
+                                      .clickable {
+                                            Timber.e("id is${movie.movieId}")
+                                            selectedMovie(movie.movieId)
+                                      } ,
                                 shape = MaterialTheme.shapes.medium)
           }
      }
@@ -182,9 +182,9 @@ private fun ActorBioGraphi(
 )
 {
      Column(modifier = Modifier
-               .verticalGradientScrim(color = MaterialTheme.colors.surface.copy(
-                         0.75f) , startYPercentage = 0f , endYPercentage = 1f)
-               .padding(bottom = 60.dp , top = 20.dp , start = 20.dp , end = 20.dp)) {
+           .verticalGradientScrim(color = MaterialTheme.colors.surface.copy(
+                 0.75f) , startYPercentage = 0f , endYPercentage = 1f)
+           .padding(bottom = 60.dp , top = 20.dp , start = 20.dp , end = 20.dp)) {
           Row(verticalAlignment = Alignment.CenterVertically) {
                Image(painter = painterResource(id = R.drawable.ic_biography) ,
                      contentDescription = stringResource(
@@ -213,7 +213,7 @@ private fun AgeInfo(
 {
      Column(horizontalAlignment = Alignment.CenterHorizontally ,
             modifier = Modifier.padding(20.dp)) {
-          Box(modifier = Modifier.borderRevealAnimation()) {
+          Box {
                Text(text = "${calculateAge(actorAge)}" ,
                     style = MaterialTheme.typography.h6 ,
                     color = MaterialTheme.colors.onSurface ,
@@ -230,15 +230,16 @@ private fun CountryInfo(
 {
      Column(modifier = Modifier.padding(20.dp) ,
             horizontalAlignment = Alignment.CenterHorizontally) {
-          Box(modifier = Modifier.borderRevealAnimation()) {
-               Image(painter = painterResource(id = R.drawable.ic_globe) ,
-                     contentDescription = stringResource(
-                               id = R.string.cd_place_of_birth_icon) ,
-                     colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface) ,
-                     modifier = Modifier
-                               .align(
-                                         Alignment.Center)
-                               .size(30.dp))
+          Box {
+                Column {
+                      Image(painter = painterResource(id = R.drawable.ic_globe) ,
+                            contentDescription = stringResource(
+                                  id = R.string.cd_place_of_birth_icon) ,
+                            colorFilter = ColorFilter.tint(MaterialTheme.colors.onSurface) )
+                      Text(text = placeOfBirth?:"")
+
+                }
+
           }
      }
 }
@@ -250,13 +251,13 @@ private fun PopularityInfo(
 {
      Column(modifier = Modifier.padding(20.dp) ,
             horizontalAlignment = Alignment.CenterHorizontally) {
-          Box(modifier = Modifier.borderRevealAnimation()) {
+          Box {
                Text(text = getPopularity(popularity) ,
                     style = MaterialTheme.typography.h6 ,
                     color = MaterialTheme.colors.onSurface ,
                     modifier = Modifier
-                              .padding(vertical = 10.dp , horizontal = 10.dp)
-                              .align(Alignment.Center))
+                          .padding(vertical = 10.dp , horizontal = 10.dp)
+                          .align(Alignment.Center))
           }
           ActorInfoHeaderSubtitle(subtitle = stringResource(id = R.string.actor_popularity_subtitle))
      }
