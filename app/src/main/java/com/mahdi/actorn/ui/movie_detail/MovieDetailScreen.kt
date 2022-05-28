@@ -286,25 +286,25 @@ private fun MovieDetailBackgroundWithGradiantForeground(
     imageUrl: String?,
     modifier: Modifier = Modifier,
 ) {
-    Box {
-        LoadNetworkImage(
-            imageUrl = imageUrl,
-            contentDescription = stringResource(id = R.string.cd_actor_banner),
-            modifier = Modifier
-                .fillMaxSize()
-                .alpha(0.15f),
-            shape = RectangleShape
-        )
-        Box(
-            modifier = modifier
-                .fillMaxSize()
-                .verticalGradientScrim(
-                    color = MaterialTheme.colors.primary.copy(0.5f),
-                    startYPercentage = 0f,
-                    endYPercentage = 1f
-                )
-        )
-    }
+//    Box {
+//        LoadNetworkImage(
+//            imageUrl = imageUrl,
+//            contentDescription = stringResource(id = R.string.cd_actor_banner),
+//            modifier = Modifier
+//                .fillMaxSize()
+//                .alpha(0.15f),
+//            shape = RectangleShape
+//        )
+//        Box(
+//            modifier = modifier
+//                .fillMaxSize()
+//                .verticalGradientScrim(
+//                    color = MaterialTheme.colors.primary.copy(0.5f),
+//                    startYPercentage = 0f,
+//                    endYPercentage = 1f
+//                )
+//        )
+//    }
 }
 
 @Composable
