@@ -1,6 +1,7 @@
 package com.mahdi.actorn.ui.movie_detail
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,10 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -31,6 +35,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberImagePainter
 import com.mahdi.actorn.R
 import com.mahdi.actorn.model.Actor
 import com.mahdi.actorn.model.MovieDetail
@@ -48,110 +53,43 @@ fun MovieDetailScreen(
     navigateUp: () -> Unit,
 ) {
     val uiState = viewModel.uiState
-
-
-        Spacer(modifier = Modifier.height(15.dp))
-        Scaffold(
-            topBar = {
-                MovieDetailAppBar(
-                    navigateUp = navigateUp,
-                    title = "${uiState.movieData?.movieTitle}"
-                )
-            }
-        ) {
-
-
-            MovieDetailsContent(uiState.movieData, viewModel)
-
-
-
-
-            ActorBackgroundWithGradiantForeground(imageUrl = uiState.movieData?.poster)
-            //  columnListNews(viewState = uiState)
-        }
-
-}
-
-@Composable
-fun Genres(viewModel: MovieDetailViewModel) {
-    val uiState = viewModel.uiState
-    Column() {
-        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_genres),
-                contentDescription = "",
-                modifier = Modifier.padding(start = 20.dp, end = 20.dp),
-
+    Spacer(modifier = Modifier.height(15.dp))
+    Scaffold(
+        topBar = {
+            MovieDetailAppBar(
+                navigateUp = navigateUp,
+                title = "${uiState.movieData?.movieTitle}"
             )
         }
-Row(verticalAlignment = Alignment.CenterVertically) {
-    uiState.movieData?.let { data ->
-        data.genres.forEach { genres ->
-
-          TextAll(text = "Genres : ", color =MaterialTheme.colors.onSurface )
-            TextAll2(text = "$genres", color = MaterialTheme.colors.onSurface)
-        }
+    ) {
+        MovieDetailsContent(uiState.movieData, viewModel)
     }
-}
-    }
-}
-
-@Composable
-fun ProductionCompanies(viewModel: MovieDetailViewModel) {
-    val uiState = viewModel.uiState
-
-        uiState.movieData?.let { data ->
-            data.productionCompanies.forEach { productionCompanies ->
-                TextDescription(query = "by $productionCompanies", paddingstart = 0.dp, paddingEnd = 0.dp)
-
-            }
-        }
 
 }
+
 
 @Composable
 fun MovieDetailsContent(movieData: MovieDetail?, viewModel: MovieDetailViewModel) {
+    val uiState = viewModel.uiState
+    MovieDetailBackgroundWithGradiantForeground(imageUrl = uiState.movieData?.poster)
     LazyColumn {
-val uiState = viewModel.uiState
-        item {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Spacer(modifier = Modifier.width(20.dp))
-                MovieBanner(movieData?.poster)
-                Spacer(modifier = Modifier.width(20.dp))
-                Column() {
 
-                    TextTitle(query ="${uiState.movieData?.movieTitle}", padding = 0.dp)
-
-                    ProductionCompanies(viewModel = viewModel)
-                }
-                
-            }
-
-        }
-        // item { popularity(popularity = movieData?.popularity) }
-        // item { voteAverage(average = movieData?.voteAverage) }
-        // item { originalLanguage(language = movieData?.originalLanguage) }
-
+        item { ProfileName(movieData = movieData, viewModel = viewModel) }
         item { MovieBannercenter(bannerUrl = movieData?.banner) }
         item { Spacer(modifier = Modifier.height(10.dp)) }
         item { Overview(overview = movieData?.overview, query = movieData?.voteAverage) }
-     item {    Spacer(modifier = Modifier.height(15.dp))}
+        item { Spacer(modifier = Modifier.height(15.dp)) }
         item { Tagline(tag = movieData?.tagline) }
         item { divider() }
         item { Spacer(modifier = Modifier.height(10.dp)) }
         item { PopularAverageLanguage(movieData) }
         item { Genres(viewModel = viewModel) }
         item { divider() }
-
-
-
-
         item { Spacer(modifier = Modifier.height(15.dp)) }
         item { ReleaseData(Date = movieData?.releaseData) }
         item { divider() }
         item { Spacer(modifier = Modifier.height(15.dp)) }
         item { RunTime(runTime = movieData?.runtime) }
-        // item { MoviePosterDetail(posterUrl = movieData?.poster) }
         item { divider() }
         item { Spacer(modifier = Modifier.height(15.dp)) }
         item { OriginalLanguage(language = movieData?.originalLanguage) }
@@ -179,20 +117,14 @@ fun PopularAverageLanguage(movieData: MovieDetail?) {
                 .fillMaxWidth()
                 .height(80.dp)
                 .padding(start = 20.dp, end = 20.dp),
-
             verticalAlignment = Alignment.CenterVertically
         ) {
-
             Box(Modifier.fillMaxWidth(0.5f), contentAlignment = Alignment.CenterStart) {
                 Popularity(popularity = movieData?.popularity)
             }
-
             Box(Modifier.fillMaxWidth(1f), contentAlignment = Alignment.CenterStart) {
                 VoteAverage(average = movieData?.voteAverage)
             }
-
-
-
         }
     }
 }
@@ -201,33 +133,72 @@ fun PopularAverageLanguage(movieData: MovieDetail?) {
 fun VoteAverage(average: Double?) {
     Column() {
         Text(text = "Voteaverage ", color = Color.White, fontSize = 15.sp)
-      Row(verticalAlignment = Alignment.Bottom) {
-          TextPopularAverageLanguage(
-              text = "$average",
-              fontWeight = FontWeight.W400,
-
-              )
-          Text(text = "/10", fontSize = 15.sp, color = Color.Gray)
-      }
+        Row(verticalAlignment = Alignment.Bottom) {
+            TextPopularAverageLanguage(
+                text = "$average",
+                fontWeight = FontWeight.W400)
+            Text(text = "/10", fontSize = 15.sp, color = Color.Gray)
+        }
 
 
+    }
+}
+@Composable
+fun Genres(viewModel: MovieDetailViewModel) {
+    val uiState = viewModel.uiState
+    Column() {
+        Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterStart) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_genres),
+                contentDescription = "",
+                modifier = Modifier.padding(start = 20.dp, end = 20.dp),
+                )
+        }
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            uiState.movieData?.let { data ->
+                data.genres.forEach { genres ->
+                    TextAll(text = "Genres : ", color = MaterialTheme.colors.onSurface)
+                    TextAll2(text = "$genres", color = MaterialTheme.colors.onSurface)
+                }
+            }
+        }
+    }
+}
 
+@Composable
+fun ProductionCompanies(viewModel: MovieDetailViewModel) {
+    val uiState = viewModel.uiState
+    uiState.movieData?.let { data ->
+        data.productionCompanies.forEach { productionCompanies ->
+            TextDescription(
+                query = "by $productionCompanies",
+                paddingstart = 0.dp,
+                paddingEnd = 0.dp
+            )
+        }
+    }
+}
 
+@Composable
+fun ProfileName(movieData: MovieDetail?, viewModel: MovieDetailViewModel) {
+    val uiState = viewModel.uiState
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Spacer(modifier = Modifier.width(20.dp))
+        MovieBanner(movieData?.poster)
+        Spacer(modifier = Modifier.width(20.dp))
+        Column() {
+            TextTitle(query = "${uiState.movieData?.movieTitle}", padding = 0.dp)
+            ProductionCompanies(viewModel = viewModel)
+        }
     }
 }
 
 @Composable
 fun Tagline(tag: String?) {
-    Column() {
-
         Column() {
-
-
-            TextTitle(query = "Tagline", padding = 20.dp )
-
-            TextDescription(query =  "$tag", paddingstart = 20.dp, paddingEnd =20.dp )
+            TextTitle(query = "Tagline", padding = 20.dp)
+            TextDescription(query = "$tag", paddingstart = 20.dp, paddingEnd = 20.dp)
         }
-    }
 }
 
 @Composable
@@ -241,15 +212,13 @@ fun Status(status: String?) {
             )
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
-
-
-        TextAll(
-            text = "status : ",
-
-            color = MaterialTheme.colors.onSurface
-        )
-        TextAll2(text = "$status", color = MaterialTheme.colors.onSurface)
-    }}
+            TextAll(
+                text = "status : ",
+                color = MaterialTheme.colors.onSurface
+            )
+            TextAll2(text = "$status", color = MaterialTheme.colors.onSurface)
+        }
+    }
 }
 
 @Composable
@@ -263,15 +232,12 @@ fun RunTime(runTime: Int?) {
             )
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
-
-
-        TextAll(
-            text = "Running Time : ",
-
-            color = MaterialTheme.colors.onSurface
-        )
-        TextAll2(text = "$runTime", color =MaterialTheme.colors.onSurface )
-    }}
+            TextAll(
+                text = "Running Time : ",
+                color = MaterialTheme.colors.onSurface)
+            TextAll2(text = "$runTime", color = MaterialTheme.colors.onSurface)
+        }
+    }
 }
 
 @Composable
@@ -285,15 +251,13 @@ fun Revenue(revenue: Long?) {
             )
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
-
-
-        TextAll(
-            text = "Movie Income : ",
-
-            color = MaterialTheme.colors.onSurface
-        )
-        TextAll2(text = "$revenue", color =MaterialTheme.colors.onSurface )
-    }}
+            TextAll(
+                text = "Movie Income : ",
+                color = MaterialTheme.colors.onSurface
+            )
+            TextAll2(text = "$revenue", color = MaterialTheme.colors.onSurface)
+        }
+    }
 }
 
 @Composable
@@ -309,19 +273,16 @@ fun ReleaseData(
             )
         }
         Row(verticalAlignment = Alignment.CenterVertically) {
-
-
-        TextAll(
-            text = "releaseDate : ",
-
-            color = MaterialTheme.colors.onSurface
-        )
-        TextAll2(text = "$Date", color = MaterialTheme.colors.onSurface)
-    }}
+            TextAll(
+                text = "releaseDate : ",
+                color = MaterialTheme.colors.onSurface)
+            TextAll2(text = "$Date", color = MaterialTheme.colors.onSurface)
+        }
+    }
 }
 
 @Composable
-private fun ActorBackgroundWithGradiantForeground(
+private fun MovieDetailBackgroundWithGradiantForeground(
     imageUrl: String?,
     modifier: Modifier = Modifier,
 ) {
@@ -331,7 +292,7 @@ private fun ActorBackgroundWithGradiantForeground(
             contentDescription = stringResource(id = R.string.cd_actor_banner),
             modifier = Modifier
                 .fillMaxSize()
-                .alpha(0.1f),
+                .alpha(0.15f),
             shape = RectangleShape
         )
         Box(
@@ -380,10 +341,9 @@ fun OriginalLanguage(
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextAll(
                 text = "Language : ",
-
                 color = MaterialTheme.colors.onSurface
             )
-            TextAll2(text ="$language" , color =MaterialTheme.colors.onSurface)
+            TextAll2(text = "$language", color = MaterialTheme.colors.onSurface)
         }
 
     }
@@ -392,26 +352,27 @@ fun OriginalLanguage(
 @Composable
 fun Overview(
     overview: String?,
-    query:Double?
+    query: Double?
 ) {
     Column(verticalArrangement = Arrangement.Center) {
-Box(Modifier.fillMaxWidth()) {
-    Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.fillMaxWidth()) {
-        TextTitle(query = "Overview", padding = 20.dp)
-    }
-    Box(contentAlignment = Alignment.CenterEnd, modifier = Modifier
-        .fillMaxWidth()
-        .padding(end = 20.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(painter = painterResource(id = R.drawable.ic_star_gold) , contentDescription ="" )
-
-            TextDescription(query = "$query", paddingstart = 0.dp, paddingEnd = 20.dp)
-
+        Box(Modifier.fillMaxWidth()) {
+            Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.fillMaxWidth()) {
+                TextTitle(query = "Overview", padding = 20.dp)
+            }
+            Box(
+                contentAlignment = Alignment.CenterEnd, modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 20.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_star_gold),
+                        contentDescription = ""
+                    )
+                    TextDescription(query = "$query", paddingstart = 0.dp, paddingEnd = 20.dp)
+                }
+            }
         }
-    }
-}
-
-
         TextDescription(query = "$overview", paddingstart = 20.dp, paddingEnd = 20.dp)
     }
 
@@ -423,19 +384,14 @@ fun Popularity(
     popularity: Double?
 ) {
     Column() {
-
-Text(text = "Grade Of Fame", color = Color.White, fontSize = 15.sp)
-
-Row(verticalAlignment = Alignment.Bottom) {
-    TextPopularAverageLanguage(
-        text = "$popularity",
-        fontWeight = FontWeight.W400,
-
-        )
-    Text(text = "/100" , fontSize = 15.sp, color = Color.Gray)
-}
-
-
+        Text(text = "Grade Of Fame", color = Color.White, fontSize = 15.sp)
+        Row(verticalAlignment = Alignment.Bottom) {
+            TextPopularAverageLanguage(
+                text = "$popularity",
+                fontWeight = FontWeight.W400,
+                )
+            Text(text = "/100", fontSize = 15.sp, color = Color.Gray)
+        }
 
 
     }
@@ -459,16 +415,11 @@ fun MovieBudget(
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextAll(
                 text = "Movie Production Budget : ",
-
                 color = MaterialTheme.colors.onSurface
             )
-            TextAll2(text ="$budget" , color = MaterialTheme.colors.onSurface)
+            TextAll2(text = "$budget", color = MaterialTheme.colors.onSurface)
         }
-
-
-
     }
-
 }
 
 
@@ -477,10 +428,10 @@ private fun MovieBanner(
     bannerUrl: String?,
 ) {
     Box(
-modifier = Modifier  .padding(top = 10.dp, bottom = 10.dp),
+        modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
         contentAlignment = Alignment.Center
     ) {
-        Card(backgroundColor = MaterialTheme.colors.onSurface, shape = RoundedCornerShape( 40.dp)) {
+        Card(backgroundColor = MaterialTheme.colors.onSurface, shape = RoundedCornerShape(40.dp)) {
             LoadNetworkImage(
                 imageUrl = "$bannerUrl",
                 contentDescription = stringResource(id = R.string.cd_actor_image),
@@ -488,43 +439,32 @@ modifier = Modifier  .padding(top = 10.dp, bottom = 10.dp),
                 modifier = Modifier
                     .width(80.dp)
                     .height(80.dp)
-
-
             )
         }
-
-
     }
 }
 
 @Composable
 fun TextAll(
     text: String,
-
     color: Color
-
 ) {
-
     Text(
         text = text,
         style = TextStyle(
             color = color,
             fontWeight = SemiBold,
             fontSize = 18.sp,
-            textAlign = TextAlign.Justify
-        ),
-
-        modifier = Modifier.padding(start = 20.dp,)
+            textAlign = TextAlign.Justify),
+        modifier = Modifier.padding(start = 20.dp)
     )
 }
+
 @Composable
 fun TextAll2(
     text: String,
-
     color: Color
-
 ) {
-
     Text(
         text = text,
         style = TextStyle(
@@ -533,8 +473,7 @@ fun TextAll2(
             fontSize = 16.sp,
             textAlign = TextAlign.Justify
         ),
-
-        modifier = Modifier.padding( end = 20.dp)
+        modifier = Modifier.padding(end = 20.dp)
     )
 }
 
@@ -543,9 +482,7 @@ fun TextAll2(
 fun TextPopularAverageLanguage(
     text: String,
     fontWeight: FontWeight,
-
-
-) {
+    ) {
     Box(contentAlignment = Alignment.Center) {
         Text(
             text = text,
@@ -556,19 +493,14 @@ fun TextPopularAverageLanguage(
                 fontSize = 25.sp,
                 textAlign = TextAlign.Center
             ),
-
             modifier = Modifier.padding(top = 5.dp)
         )
-
     }
-
 }
-
 
 
 @Composable
 fun divider(
-
 ) {
     Divider(
         modifier = Modifier
@@ -590,12 +522,10 @@ fun dividerPopularAverageLanguage() {
     )
 }
 
-
-
 @Composable
-fun TextTitle(query:String,padding: Dp) {
-
-    Text(modifier = Modifier.padding(start = padding),
+fun TextTitle(query: String, padding: Dp) {
+    Text(
+        modifier = Modifier.padding(start = padding),
         text = query,
         style = TextStyle(
             lineHeight = 20.sp,
@@ -603,12 +533,19 @@ fun TextTitle(query:String,padding: Dp) {
             fontWeight = FontWeight.SemiBold,
             fontSize = 25.sp,
             textAlign = TextAlign.Justify
-        ))
+        )
+    )
 }
 
 @Composable
-fun TextDescription(query:String,paddingstart:Dp,paddingEnd: Dp) {
-    Text(text = query, fontWeight = W300, fontSize = 16.sp,color = MaterialTheme.colors.onSurface, modifier = Modifier.padding(start = paddingstart, end = paddingEnd))
+fun TextDescription(query: String, paddingstart: Dp, paddingEnd: Dp) {
+    Text(
+        text = query,
+        fontWeight = W300,
+        fontSize = 16.sp,
+        color = MaterialTheme.colors.onSurface,
+        modifier = Modifier.padding(start = paddingstart, end = paddingEnd)
+    )
 
 }
 
@@ -616,13 +553,12 @@ fun TextDescription(query:String,paddingstart:Dp,paddingEnd: Dp) {
 @Composable
 private fun MovieBannercenter(
     bannerUrl: String?,
-
-) {
+    ) {
     Box(
-        modifier = Modifier  .padding(20.dp),
+        modifier = Modifier.padding(20.dp),
         contentAlignment = Alignment.Center
     ) {
-        Card(backgroundColor = MaterialTheme.colors.onSurface, shape = RoundedCornerShape( 30.dp)) {
+        Card(backgroundColor = Color.Black, shape = RoundedCornerShape(30.dp)) {
             LoadNetworkImage(
                 imageUrl = "$bannerUrl",
                 contentDescription = stringResource(id = R.string.cd_actor_image),
@@ -630,12 +566,23 @@ private fun MovieBannercenter(
                 modifier = Modifier
                     .fillMaxWidth()
                     .requiredHeight(200.dp)
-
-
             )
         }
-
-
     }
 }
 
+@Composable
+fun image(imageUrl: String, shape: Shape, modifier: Modifier) {
+    Image(
+        painter = rememberImagePainter(
+            data = imageUrl,
+            builder = {
+                placeholder(R.drawable.animated_progress)
+                error(R.drawable.ic_image_not_available)
+            }),
+        contentDescription = "",
+        contentScale = ContentScale.Crop,
+        modifier = modifier
+            .clip(shape)
+    )
+}
