@@ -10,6 +10,7 @@ import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -36,22 +37,12 @@ fun MovieDetailAppBar(
                     Icon(
                         imageVector = Icons.Rounded.ArrowBack,
                         contentDescription = "",
-                        modifier = Modifier.padding(bottom = 5.dp)
+                        modifier = Modifier.padding( 5.dp, bottom = 5.dp).align(Alignment.Center)
                     )
                 }
             }
-            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Text(
-                    text = title,
-                    style = TextStyle(
-                        lineHeight = 20.sp,
-                        color = MaterialTheme.colors.onSurface,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 25.sp,
-                        textAlign = TextAlign.Justify
-                    ),
-                    color = MaterialTheme.colors.onBackground,
-                )
+            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.CenterEnd) {
+               Icon(modifier = Modifier.padding( 5.dp),painter = painterResource(id = R.drawable.ic_star), contentDescription ="" )
             }
         }
     }
