@@ -37,7 +37,7 @@ fun SearchScreen(
      Surface(color = MaterialTheme.colors.background) {
           Scaffold(topBar = { SearchAppBar(navigateUp = navigateUp , viewModel = viewModel) }) {
                Box {
-                    val isLoadingData = ! uiState.isSearchingResults && uiState.actorList.isEmpty()
+                    val isLoadingData = uiState.isSearchingResults
                     ShowProgressIndicator(isLoadingData = isLoadingData)
                     ItemActorList(actorList = uiState.actorList , selectedActor = selectedActor)
                }
