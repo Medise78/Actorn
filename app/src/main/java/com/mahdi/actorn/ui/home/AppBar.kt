@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.mahdi.actorn.R
@@ -22,13 +23,16 @@ fun HomeAppBar(
           navigateToSearch : () -> Unit ,
 )
 {
+    Column {
+
+        Spacer(modifier = Modifier.height(30.dp))
      Row(verticalAlignment = Alignment.CenterVertically ,
          modifier = Modifier
-                   .fillMaxWidth()
-                   .height(50.dp)
-                   .clip(shape = MaterialTheme.shapes.medium)
-                   .clickable(onClick = navigateToSearch)
-                   .background(color = MaterialTheme.colors.surface)) {
+             .fillMaxWidth()
+             .height(50.dp)
+             .clip(shape = MaterialTheme.shapes.medium)
+             .clickable(onClick = navigateToSearch)
+             .background(color = Color(0xFF37474f))) {
           Spacer(modifier = Modifier.padding(horizontal = 10.dp))
           Icon(
                     imageVector = Icons.Default.Search ,
@@ -42,4 +46,4 @@ fun HomeAppBar(
                modifier = Modifier.alpha(0.5f)
           )
      }
-}
+}}

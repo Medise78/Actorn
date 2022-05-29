@@ -66,7 +66,7 @@ private fun ScreenContent(
 {
      LazyColumn {
           item {
-               Spacer(modifier = Modifier.padding(vertical = 20.dp))
+               Spacer(modifier = Modifier.height(40.dp))
           }
           item {
                CategoryHome(stringResource(id = R.string.category_actors_popular))
@@ -176,7 +176,7 @@ private fun MainAppBar(
                } ,
                backgroundColor = MaterialTheme.colors.background ,
                elevation = 0.dp ,
-               modifier = Modifier.padding(horizontal = 20.dp) ,
+               modifier = Modifier.padding(horizontal = 20.dp).height(120.dp) ,
                contentPadding = rememberInsetsPaddingValues(
                          insets = LocalWindowInsets.current.statusBars)
      )
