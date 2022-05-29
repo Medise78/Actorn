@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import com.mahdi.actorn.R
 
 @Composable
@@ -30,8 +31,9 @@ fun DetailAppBar(
      }
      Box {
           Text(text = title ,
+              fontSize = 22.sp,
                color = MaterialTheme.colors.onBackground ,
-               style = MaterialTheme.typography.h6 ,
+               style = MaterialTheme.typography.h1 ,
                textAlign = TextAlign.Center ,
                modifier = Modifier
                          .fillMaxWidth()

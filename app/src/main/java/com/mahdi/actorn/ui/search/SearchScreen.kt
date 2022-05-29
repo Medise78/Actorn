@@ -138,8 +138,15 @@ fun SearchAppBar(
                     maxLines = 1 ,
                     modifier = Modifier
                               .fillMaxWidth()
-                              .background(MaterialTheme.colors.background , RectangleShape) ,
-                    colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent))
+                              .background(Color(0xFF37474f) , RectangleShape) ,
+              colors = TextFieldDefaults.textFieldColors(
+                  textColor = Color.White ,
+                  disabledTextColor = Color(0xFF37474f) ,
+                  backgroundColor = Color(0xFF37474f) ,
+                  focusedIndicatorColor = Color(0xFF37474f) ,
+                  unfocusedIndicatorColor = Color(0xFF37474f) ,
+                  disabledIndicatorColor = Color(0xFF37474f)
+              ))
           
           AppDivider(verticalPadding = 0.dp)
      }

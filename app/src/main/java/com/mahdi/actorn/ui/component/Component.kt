@@ -1,16 +1,21 @@
 package com.mahdi.actorn.ui.component
 
 import android.content.Context
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.mahdi.actorn.R
 import com.mahdi.actorn.utils.ApiKey
 import com.mahdi.actorn.utils.NetworkManger
@@ -78,12 +83,31 @@ fun AppDivider(
 fun CategoryTitle(
           title : String ,
 ) {
+
      Text(
                text = title ,
-               style = MaterialTheme.typography.h6 ,
-               color = MaterialTheme.colors.onBackground ,
+         style = MaterialTheme.typography.h2 ,
+               color = Color.White ,
                modifier = Modifier
-                         .padding(start = 20.dp)
-                         .alpha(0.5f)
+                         .padding(start = 20.dp).alpha(0.75f)
+                         ,
+         fontSize = 20.sp
      )
+}
+@Composable
+fun CategoryHome(
+    title: String
+){
+
+    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center){
+        Text(
+            text = title ,
+            style = MaterialTheme.typography.h1 ,
+            color = Color.White ,
+            modifier = Modifier
+                .alpha(0.75f)
+            ,
+            fontSize = 22.sp
+        )
+    }
 }

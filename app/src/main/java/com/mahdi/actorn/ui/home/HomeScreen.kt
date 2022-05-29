@@ -1,5 +1,6 @@
 package com.mahdi.actorn.ui.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -7,10 +8,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -66,7 +69,7 @@ private fun ScreenContent(
                Spacer(modifier = Modifier.padding(vertical = 20.dp))
           }
           item {
-               CategoryTitle(stringResource(id = R.string.category_actors_popular))
+               CategoryHome(stringResource(id = R.string.category_actors_popular))
           }
           item {
                Spacer(modifier = Modifier.padding(vertical = 10.dp))
@@ -81,7 +84,7 @@ private fun ScreenContent(
                AppDivider(verticalPadding = 30.dp)
           }
           item {
-               CategoryTitle(title = stringResource(id = R.string.category_actors_trending))
+               CategoryHome(title = stringResource(id = R.string.category_actors_trending))
           }
           item {
                Spacer(modifier = Modifier.padding(vertical = 10.dp))
@@ -122,35 +125,42 @@ private fun ItemActor(
 {
      Card(
                modifier = Modifier
-                         .width(150.dp)
-                         .clickable(onClick = { selectedActor(actor.actorId) }) ,
-               shape = MaterialTheme.shapes.large
+                   .width(150.dp)
+                   .clickable(onClick = { selectedActor(actor.actorId) }) ,
+               shape = RoundedCornerShape(15.dp)
      ) {
-          Column(horizontalAlignment = Alignment.CenterHorizontally) {
-               Spacer(modifier = Modifier.padding(vertical = 10.dp))
-               LoadNetworkImage(
-                         imageUrl = actor.profileUrl ,
-                         contentDescription = stringResource(id = R.string.cd_actor_image) ,
-                         modifier = Modifier
-                                   .size(120.dp)
-                                   .border(width = 1.dp ,
-                                           color = MaterialTheme.colors.onSurface ,
-                                           shape = CircleShape) ,
-                         shape = CircleShape
-               )
-               Spacer(modifier = Modifier.padding(vertical = 10.dp))
-               Text(
-                         text = actor.actorName ,
-                         style = MaterialTheme.typography.subtitle1 ,
-                         textAlign = TextAlign.Center ,
-                         maxLines = 1 ,
-                         overflow = TextOverflow.Ellipsis ,
-                         modifier = Modifier
-                                   .padding(horizontal = 10.dp)
-                                   .fillMaxWidth()
-               )
-               Spacer(modifier = Modifier.padding(vertical = 10.dp))
-          }
+         Box(modifier = Modifier.background(Color(0xFF37474f))) {
+
+
+             Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                 Spacer(modifier = Modifier.padding(vertical = 10.dp))
+                 LoadNetworkImage(
+                     imageUrl = actor.profileUrl,
+                     contentDescription = stringResource(id = R.string.cd_actor_image),
+                     modifier = Modifier
+                         .size(120.dp)
+                         .border(
+                             width = 1.dp,
+                             color = MaterialTheme.colors.onSurface,
+                             shape = CircleShape
+                         ),
+                     shape = CircleShape
+                 )
+                 Spacer(modifier = Modifier.padding(vertical = 10.dp))
+                 Text(
+                     text = actor.actorName,
+                     color = Color.White,
+                     style = MaterialTheme.typography.h2,
+                     textAlign = TextAlign.Center,
+                     maxLines = 1,
+                     overflow = TextOverflow.Ellipsis,
+                     modifier = Modifier
+                         .padding(horizontal = 10.dp)
+                         .fillMaxWidth()
+                 )
+                 Spacer(modifier = Modifier.padding(vertical = 10.dp))
+             }
+         }
      }
 }
 
@@ -160,6 +170,7 @@ private fun MainAppBar(
 )
 {
      TopAppBar(
+
                content = {
                     HomeAppBar(navigationToSearch)
                } ,

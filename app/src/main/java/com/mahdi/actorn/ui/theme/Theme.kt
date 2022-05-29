@@ -5,6 +5,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import com.mahdi.actorn.R
 
 private val DarkColorPalette = darkColors(
           primary = dark_primary ,
@@ -22,6 +26,12 @@ private val LightColorPalette = lightColors(
           onBackground = light_onBackground ,
           surface = light_surface ,
           onSurface = light_onSurface ,
+)
+ val LatoBold = FontFamily(
+    Font(R.font.latobold),
+)
+val Lato = FontFamily(
+    Font(R.font.lato)
 )
 
 @Composable
