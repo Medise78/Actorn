@@ -20,8 +20,12 @@ fun getPopularity(
           popularity : Double? ,
 ) : String
 {
-     val formatPopularity = popularity.toString().split(".")
-     return formatPopularity[0]
+     if (popularity !=null){
+          val formatPopularity = popularity.toString().split(".")
+          return formatPopularity[0]
+     }else{
+        return  ""
+     }
 }
 
 fun getPlaceOfBirth(
