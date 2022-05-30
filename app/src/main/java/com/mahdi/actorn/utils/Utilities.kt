@@ -24,7 +24,7 @@ fun getPopularity(
           val formatPopularity = popularity.toString().split(".")
           return formatPopularity[0]
      }else{
-        return  ""
+        return  "0"
      }
 }
 
