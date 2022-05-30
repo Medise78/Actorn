@@ -4,24 +4,34 @@ import java.util.*
 
 fun calculateAge(
           dateOfBirth : String? ,
-) : Int
+) : String
 {
-     var age = 0
-     val grabYear : Int? = dateOfBirth?.dropLast(6)?.toInt()
-     val currentYear : Int = Calendar.getInstance().get(Calendar.YEAR)
-     if (grabYear != null)
-     {
-          age = currentYear - grabYear
+     if (dateOfBirth != null){
+          var age = 0
+          val grabYear : Int? = dateOfBirth?.dropLast(6)?.toInt()
+          val currentYear : Int = Calendar.getInstance().get(Calendar.YEAR)
+          if (grabYear != null)
+          {
+               age = currentYear - grabYear
+          }
+          return age.toString()
+     }else{
+          return ""
      }
-     return age
+
 }
 
 fun getPopularity(
           popularity : Double? ,
 ) : String
 {
-     val formatPopularity = popularity.toString().split(".")
-     return formatPopularity[0]
+     if (popularity !=null){
+          val formatPopularity = popularity.toString().split(".")
+          return formatPopularity[0]
+     }else{
+          return ""
+     }
+
 }
 
 fun getPlaceOfBirth(

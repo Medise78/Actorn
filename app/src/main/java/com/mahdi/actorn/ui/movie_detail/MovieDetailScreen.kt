@@ -49,7 +49,7 @@ fun MovieDetailScreen(
       ) {
             MovieDetailsContent(uiState.movieData , viewModel)
 
-          
+
             //  columnListNews(viewState = uiState)
       }
 
@@ -98,10 +98,10 @@ fun ProductionCompanies(viewModel : MovieDetailViewModel)
 @Composable
 fun MovieDetailsContent(movieData : MovieDetail? , viewModel : MovieDetailViewModel)
 {
-       val uiState = viewModel.uiState
-         ActorBackgroundWithGradiantForeground(imageUrl = uiState.movieData?.poster)
+      val uiState = viewModel.uiState
+      ActorBackgroundWithGradiantForeground(imageUrl = uiState.movieData?.poster)
       LazyColumn {
-            
+
             item {
                   Row(verticalAlignment = Alignment.CenterVertically) {
                         Spacer(modifier = Modifier.width(20.dp))
@@ -109,7 +109,8 @@ fun MovieDetailsContent(movieData : MovieDetail? , viewModel : MovieDetailViewMo
                         Spacer(modifier = Modifier.width(20.dp))
                         Column() {
 
-                              TextTitle(query = "${uiState.movieData?.movieTitle}" , padding = 0.dp)
+                              TextTitle(query = uiState.movieData?.movieTitle ?: "" ,
+                                        padding = 0.dp)
 
                               ProductionCompanies(viewModel = viewModel)
                         }
@@ -163,10 +164,10 @@ fun PopularAverageLanguage(movieData : MovieDetail?)
 {
       Column {
             Row(
-                Modifier
-                    .fillMaxWidth()
-                    .height(80.dp)
-                    .padding(start = 20.dp , end = 20.dp) ,
+                  Modifier
+                        .fillMaxWidth()
+                        .height(80.dp)
+                        .padding(start = 20.dp , end = 20.dp) ,
 
                   verticalAlignment = Alignment.CenterVertically
             ) {
@@ -193,7 +194,6 @@ fun VoteAverage(average : Double?)
                   TextPopularAverageLanguage(
                         text = "$average" ,
                         fontWeight = FontWeight.W400 ,
-
                         )
                   Text(text = "/10" , fontSize = 15.sp , color = Color.Gray)
             }
@@ -211,8 +211,11 @@ fun Tagline(tag : String?)
 
 
                   TextTitle(query = "Tagline" , padding = 20.dp)
-
-                  TextDescription(query = "$tag" , paddingstart = 20.dp , paddingEnd = 20.dp)
+                  if (tag != null){
+                        TextDescription(query = tag , paddingstart = 20.dp , paddingEnd = 20.dp)
+                  }else{
+                        ""
+                  }
             }
       }
 }
@@ -220,7 +223,7 @@ fun Tagline(tag : String?)
 @Composable
 fun Status(status : String?)
 {
-      Column() {
+      Column {
             Box(Modifier.fillMaxWidth() , contentAlignment = Alignment.CenterStart) {
                   Icon(
                         painter = painterResource(id = R.drawable.ic_replace) ,
@@ -284,7 +287,7 @@ fun Revenue(revenue : Long?)
 
                         color = MaterialTheme.colors.onSurface
                   )
-                  TextAll2(text = "$revenue" , color = MaterialTheme.colors.onSurface)
+                  TextAll2(text = "${revenue ?: ""}" , color = MaterialTheme.colors.onSurface)
             }
       }
 }
@@ -321,25 +324,25 @@ private fun ActorBackgroundWithGradiantForeground(
        modifier : Modifier = Modifier ,
 )
 {
-//      Box {
-//            LoadNetworkImage(
-//                  imageUrl = imageUrl ,
-//                  contentDescription = stringResource(id = R.string.cd_actor_banner) ,
-//                  modifier = Modifier
-//                      .fillMaxSize()
-//                      .alpha(0.1f) ,
-//                  shape = RectangleShape
-//            )
-//            Box(
-//                  modifier = modifier
-//                      .fillMaxSize()
-//                      .verticalGradientScrim(
-//                          color = MaterialTheme.colors.primary.copy(0.5f) ,
-//                          startYPercentage = 0f ,
-//                          endYPercentage = 1f
-//                      )
-//            )
-//      }
+      //      Box {
+      //            LoadNetworkImage(
+      //                  imageUrl = imageUrl ,
+      //                  contentDescription = stringResource(id = R.string.cd_actor_banner) ,
+      //                  modifier = Modifier
+      //                      .fillMaxSize()
+      //                      .alpha(0.1f) ,
+      //                  shape = RectangleShape
+      //            )
+      //            Box(
+      //                  modifier = modifier
+      //                      .fillMaxSize()
+      //                      .verticalGradientScrim(
+      //                          color = MaterialTheme.colors.primary.copy(0.5f) ,
+      //                          startYPercentage = 0f ,
+      //                          endYPercentage = 1f
+      //                      )
+      //            )
+      //      }
 }
 
 @Composable
@@ -356,8 +359,8 @@ private fun MoviePosterDetail(
                   contentDescription = stringResource(id = R.string.cd_actor_image) ,
                   shape = RectangleShape ,
                   modifier = Modifier
-                      .fillMaxWidth()
-                      .requiredHeight(300.dp)
+                        .fillMaxWidth()
+                        .requiredHeight(300.dp)
             )
       }
 }
@@ -400,15 +403,20 @@ fun Overview(
                         TextTitle(query = "Overview" , padding = 20.dp)
                   }
                   Box(contentAlignment = Alignment.CenterEnd , modifier = Modifier
-                      .fillMaxWidth()
-                      .padding(end = 20.dp)) {
+                        .fillMaxWidth()
+                        .padding(end = 20.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                               Image(painter = painterResource(id = R.drawable.ic_star_gold) ,
                                     contentDescription = "")
 
-                              TextDescription(query = "$query" , paddingstart = 0.dp ,
-                                              paddingEnd = 20.dp)
-
+                              if (query != null)
+                              {
+                                    TextDescription(query = "$query" , paddingstart = 0.dp ,
+                                                    paddingEnd = 20.dp)
+                              } else
+                              {
+                                    TextDescription("" , 0.dp , 0.dp)
+                              }
                         }
                   }
             }
@@ -426,7 +434,6 @@ fun Popularity(
 )
 {
       Column() {
-
             Text(text = "Grade Of Fame" , color = Color.White , fontSize = 15.sp)
 
             Row(verticalAlignment = Alignment.Bottom) {
@@ -437,11 +444,7 @@ fun Popularity(
                         )
                   Text(text = "/100" , fontSize = 15.sp , color = Color.Gray)
             }
-
-
       }
-
-
 }
 
 
@@ -466,10 +469,7 @@ fun MovieBudget(
                   )
                   TextAll2(text = "$budget" , color = MaterialTheme.colors.onSurface)
             }
-
-
       }
-
 }
 
 
@@ -483,29 +483,23 @@ private fun MovieBanner(
             contentAlignment = Alignment.Center
       ) {
             Card(backgroundColor = MaterialTheme.colors.onSurface ,
-                 shape = RoundedCornerShape(40.dp) ) {
+                 shape = RoundedCornerShape(40.dp)) {
                   LoadNetworkImage(
                         imageUrl = "$bannerUrl" ,
                         contentDescription = stringResource(id = R.string.cd_actor_image) ,
                         shape = RectangleShape ,
                         modifier = Modifier
-                            .width(80.dp)
-                            .height(80.dp)
-
-
+                              .width(80.dp)
+                              .height(80.dp)
                   )
             }
-
-
       }
 }
 
 @Composable
 fun TextAll(
        text : String ,
-
        color : Color ,
-
        )
 {
 
@@ -525,9 +519,7 @@ fun TextAll(
 @Composable
 fun TextAll2(
        text : String ,
-
        color : Color ,
-
        )
 {
 
@@ -549,8 +541,6 @@ fun TextAll2(
 fun TextPopularAverageLanguage(
        text : String ,
        fontWeight : FontWeight ,
-
-
        )
 {
       Box(contentAlignment = Alignment.Center) {
@@ -563,12 +553,9 @@ fun TextPopularAverageLanguage(
                         fontSize = 25.sp ,
                         textAlign = TextAlign.Center
                   ) ,
-
                   modifier = Modifier.padding(top = 5.dp)
             )
-
       }
-
 }
 
 
@@ -579,10 +566,10 @@ fun divider(
 {
       Divider(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp , end = 20.dp)
-                .height(1.dp)
-                .alpha(0.7f) , color = Color.Gray
+                  .fillMaxWidth()
+                  .padding(start = 20.dp , end = 20.dp)
+                  .height(1.dp)
+                  .alpha(0.7f) , color = Color.Gray
       )
 }
 
@@ -591,10 +578,10 @@ fun dividerPopularAverageLanguage()
 {
       Divider(
             modifier = Modifier
-                .width(100.dp)
-                .padding(start = 5.dp , end = 5.dp)
-                .height(1.5.dp)
-                .alpha(1f) , color = Color.Black
+                  .width(100.dp)
+                  .padding(start = 5.dp , end = 5.dp)
+                  .height(1.5.dp)
+                  .alpha(1f) , color = Color.Black
       )
 }
 
@@ -620,7 +607,6 @@ fun TextDescription(query : String , paddingstart : Dp , paddingEnd : Dp)
       Text(text = query , fontWeight = W300 , fontSize = 16.sp ,
            color = MaterialTheme.colors.onSurface ,
            modifier = Modifier.padding(start = paddingstart , end = paddingEnd))
-
 }
 
 
@@ -641,14 +627,10 @@ private fun MovieBannercenter(
                         contentDescription = stringResource(id = R.string.cd_actor_image) ,
                         shape = RectangleShape ,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .requiredHeight(200.dp)
-
-
+                              .fillMaxWidth()
+                              .requiredHeight(200.dp)
                   )
             }
-
-
       }
 }
 
