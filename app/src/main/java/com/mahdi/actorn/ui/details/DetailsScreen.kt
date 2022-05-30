@@ -173,14 +173,14 @@ private fun ActorCastMovie(
             ),
             colorFilter = ColorFilter.tint(color = Color.White),
             alpha = 0.8f,
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(start = 20.dp)
                 .size(40.dp)
         )
         CategoryTitle(title = stringResource(id = R.string.cast_movie_title))
     }
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(10.dp),
-        modifier = Modifier.padding(20.dp)
+        modifier = Modifier.padding(10.dp)
     ) {
         items(cast) { movie ->
             LoadNetworkImage(imageUrl = movie.posterPathUrl,
