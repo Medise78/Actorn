@@ -43,13 +43,13 @@ fun MovieDetailScreen(
             topBar = {
                   MovieDetailAppBar(
                         navigateUp = navigateUp ,
-                        title = "${uiState.movieData?.movieTitle}"
+                        title = ""
                   )
             }
       ) {
             MovieDetailsContent(uiState.movieData , viewModel)
 
-            ActorBackgroundWithGradiantForeground(imageUrl = uiState.movieData?.poster)
+          
             //  columnListNews(viewState = uiState)
       }
 
@@ -98,8 +98,10 @@ fun ProductionCompanies(viewModel : MovieDetailViewModel)
 @Composable
 fun MovieDetailsContent(movieData : MovieDetail? , viewModel : MovieDetailViewModel)
 {
+       val uiState = viewModel.uiState
+         ActorBackgroundWithGradiantForeground(imageUrl = uiState.movieData?.poster)
       LazyColumn {
-            val uiState = viewModel.uiState
+            
             item {
                   Row(verticalAlignment = Alignment.CenterVertically) {
                         Spacer(modifier = Modifier.width(20.dp))
