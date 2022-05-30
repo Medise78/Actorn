@@ -4,21 +4,16 @@ import java.util.*
 
 fun calculateAge(
           dateOfBirth : String? ,
-) : String
+) : Int
 {
-     if (dateOfBirth != null){
-          var age = 0
-          val grabYear : Int? = dateOfBirth?.dropLast(6)?.toInt()
-          val currentYear : Int = Calendar.getInstance().get(Calendar.YEAR)
-          if (grabYear != null)
-          {
-               age = currentYear - grabYear
-          }
-          return age.toString()
-     }else{
-          return ""
+     var age = 0
+     val grabYear : Int? = dateOfBirth?.dropLast(6)?.toInt()
+     val currentYear : Int = Calendar.getInstance().get(Calendar.YEAR)
+     if (grabYear != null)
+     {
+          age = currentYear - grabYear
      }
-
+     return age
 }
 
 fun getPopularity(
@@ -29,9 +24,8 @@ fun getPopularity(
           val formatPopularity = popularity.toString().split(".")
           return formatPopularity[0]
      }else{
-          return ""
+        return  "0"
      }
-
 }
 
 fun getPlaceOfBirth(
