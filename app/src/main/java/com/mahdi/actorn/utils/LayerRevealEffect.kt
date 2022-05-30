@@ -41,7 +41,7 @@ fun LayerRevealImage()
                                    .navigationBarsPadding()
                )
                Image(
-                         painterResource(id = R.drawable.ken) ,
+                         painterResource(id = R.drawable.animated_progress) ,
                          contentDescription = "" ,
                          modifier = Modifier.fillMaxSize() ,
                          contentScale = ContentScale.Crop
