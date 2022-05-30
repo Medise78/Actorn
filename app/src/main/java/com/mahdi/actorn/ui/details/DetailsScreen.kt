@@ -273,12 +273,9 @@ private fun CountryInfo(
                     modifier = Modifier.size(80.dp, 80.dp),
                     contentAlignment = Alignment.TopCenter
                 ) {
-                    Text(text = placeOfBirth ?: "", style = MaterialTheme.typography.h1 , textAlign = TextAlign.Center)
+                    Text(text = getPlaceOfBirth(placeOfBirth?:""), style = MaterialTheme.typography.h1 , textAlign = TextAlign.Center , modifier = Modifier.padding(top = 10.dp))
                 }
-
-
             }
-
         }
     }
 }
